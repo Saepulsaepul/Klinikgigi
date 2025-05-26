@@ -1,0 +1,139 @@
+/* Warna sidebar */
+.sidebar-wrapper {
+  background-color: #AFDDFF !important; /* Warna biru muda */
+}
+
+/* Warna teks di sidebar */
+.sidebar-menu .menu li a {
+  color: #1a1919 !important; /* Warna hitam */
+}
+
+/* Efek hover di sidebar */
+.sidebar-menu .menu li a:hover {
+  color: #fff !important; /* Warna putih */
+  background-color: #6ea8d3 !important; /* Warna biru lebih gelap */
+}
+
+/* Style logo tulisan */
+.text-logo {
+  font-size: 28px; /* Lebih besar agar terlihat */
+  font-weight: bold;
+  color: #5f5f5f;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif; /* Font dari Google Fonts */
+  letter-spacing: 1px; /* Agar lebih elegan */
+}
+.text-logo:hover {
+  color: #6ea8d3;
+}
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Pastikan setinggi layar */
+}
+.dropdown-menu {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  position: absolute;
+  background:#cee5ec;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 10px;
+  min-width: 150px;
+}
+
+.dropdown-menu.show {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+.card {
+  margin-top: 30px;
+}
+
+.btn-danger {
+  transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+  background-color: #dc3545;
+  transform: scale(1.05);
+}
+
+.card-body {
+  padding: 30px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+#sidebar {
+  transition: all 0.3s ease;
+  width: 270px;
+  
+}
+#main-content {
+  margin-left: 270px; /* sesuai dengan #sidebar */
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 1199.98px) {
+  #sidebar {
+      display: none;
+      position: fixed;
+      z-index: 1030;
+      width: 250px;
+      height: 100%;
+      background-color: #fff;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  }
+
+  #sidebar.active {
+      display: block;
+  }
+
+  #overlay {
+      display: none;
+      position: fixed;
+      z-index: 1029;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+  }
+
+  #overlay.active {
+      display: block;
+  }
+  #main-content {
+    margin-left: 0; /* biar konten nggak ke-offset di layar kecil */
+}
+}
+.logo a {
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+.animate-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.animate-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.05);
+}
+
+.transition-btn {
+  transition: all 0.2s ease-in-out;
+}
+
+.transition-btn:hover {
+  transform: scale(1.05);
+}
+
+
+
+
