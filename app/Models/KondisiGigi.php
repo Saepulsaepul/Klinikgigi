@@ -16,6 +16,7 @@ class KondisiGigi extends Model
         'nomor_gigi',
         'kondisi',
         'tindakan',
+        'catatan',
     ];
 
     /**

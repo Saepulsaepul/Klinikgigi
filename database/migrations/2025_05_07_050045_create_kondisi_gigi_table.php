@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nomor_gigi');
             $table->string('kondisi'); // contoh: berlubang, sehat, hilang
             $table->string('tindakan')->nullable(); // contoh: tambal, cabut
+            $table->text('catatan')->nullable(); // catatan tambahan
             $table->timestamps();
         });
     }

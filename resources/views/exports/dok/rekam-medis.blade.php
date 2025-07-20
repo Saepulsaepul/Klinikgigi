@@ -47,7 +47,6 @@
         }
 
         .patient-info-container {
-            display: flex;
             margin-bottom: 10px;
         }
 
@@ -59,11 +58,12 @@
         .info-row {
             display: flex;
             margin-bottom: 5px;
+            main-height: 18px;
         }
 
         .info-label {
             font-weight: bold;
-            width: 90px;
+            width: 100px;
             color: #333;
             flex-shrink: 0;
         }
@@ -71,6 +71,7 @@
         .info-value {
             color: #000;
             flex-grow: 1;
+            word-break: break-word;
         }
 
         .section-title {
@@ -115,9 +116,20 @@
         .badge-sehat {
             background-color: #28a745;
         }
-
-        .badge-sakit {
+        .badge-karies {
             background-color: #dc3545;
+        }
+        .badge-tambalan {
+            background-color: #17a2b8;
+        }
+        .badge-hilang {
+            background-color: #6c757d;
+        }
+        .badge-akar {
+            background-color: #6f42c1;
+        }
+        .badge-implants {
+            background-color: #fd7e14;
         }
 
         .odontogram-box {
@@ -191,69 +203,73 @@
     <div class="document-title">REKAM MEDIS GIGI</div>
 
     <div class="patient-info-container">
-        <div class="patient-info-column">
-            <div class="info-row">
-                <div class="info-label">No. Rekam Medis</div>
-                <div class="info-value">
-                    {{ $isArray ? $pemeriksaan['jadwal']['patient']['no_rm'] ?? 'RM-' . ($pemeriksaan['jadwal']['patient']['id'] ?? '') : $pemeriksaan->jadwal->patient->no_rm ?? 'RM-' . $pemeriksaan->jadwal->patient->id }}
+    <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <td style="width: 50%; vertical-align: top; padding-right: 10px;">
+                <div class="info-row">
+                    <div class="info-label">No. Rekam Medis</div>
+                    <div class="info-value">
+                        {{ $isArray ? $pemeriksaan['jadwal']['patient']['no_rm'] ?? 'RM-' . ($pemeriksaan['jadwal']['patient']['id'] ?? '') : $pemeriksaan->jadwal->patient->no_rm ?? 'RM-' . $pemeriksaan->jadwal->patient->id }}
+                    </div>
                 </div>
-            </div>
-            
-            <div class="info-row">
-                <div class="info-label">Nama Pasien</div>
-                <div class="info-value">{{ $isArray ? $pemeriksaan['jadwal']['patient']['nama'] ?? '-' : $pemeriksaan->jadwal->patient->nama }}</div>
-            </div>
-            
-            <div class="info-row">
-                <div class="info-label">Tanggal Lahir</div>
-                <div class="info-value">
-                    {{ $isArray ? (isset($pemeriksaan['jadwal']['patient']['tanggal_lahir']) ? (new DateTime($pemeriksaan['jadwal']['patient']['tanggal_lahir']))->format('d/m/Y') : '-') : optional($pemeriksaan->jadwal->patient->tanggal_lahir)->format('d/m/Y') ?? '-' }}
+                
+                <div class="info-row">
+                    <div class="info-label">Nama Pasien</div>
+                    <div class="info-value">{{ $isArray ? $pemeriksaan['jadwal']['patient']['nama'] ?? '-' : $pemeriksaan->jadwal->patient->nama }}</div>
                 </div>
-            </div>
-            
-            <div class="info-row">
-                <div class="info-label">No. Telepon</div>
-                <div class="info-value">{{ $isArray ? $pemeriksaan['jadwal']['patient']['no_hp'] ?? '-' : $pemeriksaan->jadwal->patient->no_hp ?? '-' }}</div>
-            </div>
-            
-            <div class="info-row">
-                <div class="info-label">Alamat</div>
-                <div class="info-value">
-                    {{ $isArray ? $pemeriksaan['jadwal']['patient']['alamat'] ?? '-' : $pemeriksaan->jadwal->patient->alamat ?? '-' }}
+                
+                <div class="info-row">
+                    <div class="info-label">Tanggal Lahir</div>
+                    <div class="info-value">
+                        {{ $isArray ? (isset($pemeriksaan['jadwal']['patient']['tanggal_lahir']) ? (new DateTime($pemeriksaan['jadwal']['patient']['tanggal_lahir']))->format('d/m/Y') : '-') : optional($pemeriksaan->jadwal->patient->tanggal_lahir)->format('d/m/Y') ?? '-' }}
+                    </div>
                 </div>
-            </div>
-        </div>
-        
-        <div class="patient-info-column">
-            <div class="info-row">
-                <div class="info-label">Tanggal Periksa</div>
-                <div class="info-value">{{ $tanggal }}</div>
-            </div>
-            
-            <div class="info-row">
-                <div class="info-label">No. KTP</div>
-                <div class="info-value">{{ $isArray ? $pemeriksaan['jadwal']['patient']['no_ktp'] ?? '-' : $pemeriksaan->jadwal->patient->no_ktp ?? '-' }}</div>
-            </div>
-            
-            <div class="info-row">
-                <div class="info-label">Umur</div>
-                <div class="info-value">
-                    @php
-                        $birthDate = $isArray ? 
-                            ($pemeriksaan['jadwal']['patient']['tanggal_lahir'] ?? null) : 
-                            optional($pemeriksaan->jadwal->patient->tanggal_lahir);
-                        $age = calculateAge($birthDate);
-                    @endphp
-                    {{ $age ? $age.' tahun' : '-' }}
+                
+                <div class="info-row">
+                    <div class="info-label">No. Telepon</div>
+                    <div class="info-value">{{ $isArray ? $pemeriksaan['jadwal']['patient']['no_hp'] ?? '-' : $pemeriksaan->jadwal->patient->no_hp ?? '-' }}</div>
                 </div>
-            </div>
+                
+                <div class="info-row">
+                    <div class="info-label">Alamat</div>
+                    <div class="info-value">
+                        {{ $isArray ? $pemeriksaan['jadwal']['patient']['alamat'] ?? '-' : $pemeriksaan->jadwal->patient->alamat ?? '-' }}
+                    </div>
+                </div>
+            </td>
             
-            <div class="info-row">
-                <div class="info-label">Email</div>
-                <div class="info-value">{{ $isArray ? $pemeriksaan['jadwal']['patient']['email'] ?? '-' : $pemeriksaan->jadwal->patient->email ?? '-' }}</div>
-            </div>
-        </div>
-    </div>
+            <td style="width: 80%; vertical-align: top; padding-left: 20px;">
+                <div class="info-row">
+                    <div class="info-label">Tanggal Periksa</div>
+                    <div class="info-value">{{ $tanggal }}</div>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-label">No. KTP</div>
+                    <div class="info-value">{{ $isArray ? $pemeriksaan['jadwal']['patient']['no_ktp'] ?? '-' : $pemeriksaan->jadwal->patient->no_ktp ?? '-' }}</div>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-label">Umur</div>
+                    <div class="info-value">
+                        @php
+                            $birthDate = $isArray ? 
+                                ($pemeriksaan['jadwal']['patient']['tanggal_lahir'] ?? null) : 
+                                optional($pemeriksaan->jadwal->patient->tanggal_lahir);
+                            $age = calculateAge($birthDate);
+                        @endphp
+                        {{ $age ? $age.' tahun' : '-' }}
+                    </div>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-label">Email</div>
+                    <div class="info-value">{{ $isArray ? $pemeriksaan['jadwal']['patient']['email'] ?? '-' : $pemeriksaan->jadwal->patient->email ?? '-' }}</div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
 
     <div class="section-title">DATA PEMERIKSAAN</div>
     <table class="examination-table">
@@ -280,7 +296,7 @@
     </table>
 
     <div class="section-title">KONDISI DAN TINDAKAN GIGI</div>
-    @if(!$isArray && $pemeriksaan->kondisiGigi->isNotEmpty())
+    @if($isArray && !empty($pemeriksaan['kondisi_gigi']))
     <table class="examination-table">
         <thead>
             <tr>
@@ -291,16 +307,27 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($pemeriksaan->kondisiGigi as $kondisi)
+            @foreach($pemeriksaan['kondisi_gigi'] as $kondisi)
             <tr>
-                <td>{{ $kondisi->nomor_gigi }}</td>
+                <td>{{ $kondisi['nomor_gigi'] }}</td>
                 <td>
-                    <span class="badge {{ $kondisi->kondisi === 'sehat' ? 'badge-sehat' : 'badge-sakit' }}">
-                        {{ ucfirst($kondisi->kondisi) }}
+                    @php
+                        $badgeClass = match($kondisi['kondisi']) {
+                            'sehat' => 'badge-sehat',
+                            'karies' => 'badge-karies',
+                            'tambalan' => 'badge-tambalan',
+                            'hilang' => 'badge-hilang',
+                            'akar' => 'badge-akar',
+                            'implants' => 'badge-implants',
+                            default => 'badge-sehat'
+                        };
+                    @endphp
+                    <span class="badge {{ $badgeClass }}">
+                        {{ ucfirst($kondisi['kondisi']) }}
                     </span>
                 </td>
-                <td>{{ $kondisi->tindakan ?? '-' }}</td>
-                <td>{{ $kondisi->catatan ?? '-' }}</td>
+                <td>{{ $kondisi['tindakan'] ?? '-' }}</td>
+                <td>{{ $kondisi['catatan'] ?? '-' }}</td>
             </tr>
             @endforeach
         </tbody>
@@ -310,9 +337,137 @@
     @endif
 
     <div class="section-title">ODONTOGRAM</div>
-    
-    <div class="odontogram-box">
-        Diagram odontogram pasien belum tersedia.
+    <div style="width: 100%; margin-bottom: 5px; font-size: 7px;">
+        <!-- Rahang Atas -->
+        <div style="margin-bottom: 8px;">
+            <div style="font-weight: bold; margin-bottom: 5px; font-size: 12px; text-align: center;">
+                RAHANG ATAS (18-28)
+            </div>
+            <div style="text-align: center;">
+                <div style="display: inline-block; white-space: nowrap;">
+                    @php
+                        $nomorGigiList = ['18','17','16','15','14','13','12','11','21','22','23','24','25','26','27','28'];
+                    @endphp
+
+                    @foreach($nomorGigiList as $gigi)
+                        @php
+                            $kondisi = $isArray ? 
+                                (collect($pemeriksaan['kondisi_gigi'] ?? [])->firstWhere('nomor_gigi', $gigi)['kondisi'] ?? null) : 
+                                ($pemeriksaan->kondisiGigi->firstWhere('nomor_gigi', $gigi)->kondisi ?? null);
+
+                            $bgColor = match($kondisi) {
+                                'sehat' => '#ffffff',
+                                'karies' => '#ffcccc',
+                                'tambalan' => '#ccffcc',
+                                'hilang' => '#dddddd',
+                                'akar' => '#e6ccff',
+                                'implants' => '#ffd8b3',
+                                default => '#ffffff'
+                            };
+
+                            $symbol = match($kondisi) {
+                                'sehat' => '',
+                                'karies' => '●',
+                                'tambalan' => '■',
+                                'hilang' => '✕',
+                                'akar' => '▲',
+                                'implants' => '◉',
+                                default => ''
+                            };
+                        @endphp
+
+                        <span style="display: inline-block; width: 24px; height: 30px; border: 1px solid #999; margin-right: -1px;
+                            background-color: {{ $bgColor }};
+                            position: relative; text-align: center; line-height: 30px; font-size: 10px; vertical-align: top;">
+                            {{ $gigi }}
+                            @if($symbol)
+                                <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+                                    color: {{ $kondisi === 'sehat' ? 'transparent' : '#333' }};">
+                                    {{ $symbol }}
+                                </span>
+                            @endif
+                        </span>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+        <!-- Rahang Bawah -->
+        <div style="margin-bottom: 8px;">
+            <div style="font-weight: bold; margin-bottom: 5px; font-size: 12px; text-align: center;">
+                RAHANG BAWAH (38-48)
+            </div>
+            <div style="text-align: center;">
+                <div style="display: inline-block; white-space: nowrap;">
+                    @php
+                        $nomorGigiList = ['48','47','46','45','44','43','42','41','31','32','33','34','35','36','37','38'];
+                    @endphp
+
+                    @foreach($nomorGigiList as $gigi)
+                        @php
+                            $kondisi = $isArray ? 
+                                (collect($pemeriksaan['kondisi_gigi'] ?? [])->firstWhere('nomor_gigi', $gigi)['kondisi'] ?? null) : 
+                                ($pemeriksaan->kondisiGigi->firstWhere('nomor_gigi', $gigi)->kondisi ?? null);
+
+                            $bgColor = match($kondisi) {
+                                'sehat' => '#ffffff',
+                                'karies' => '#ffcccc',
+                                'tambalan' => '#ccffcc',
+                                'hilang' => '#dddddd',
+                                'akar' => '#e6ccff',
+                                'implants' => '#ffd8b3',
+                                default => '#ffffff'
+                            };
+
+                            $symbol = match($kondisi) {
+                                'sehat' => '',
+                                'karies' => '●',
+                                'tambalan' => '■',
+                                'hilang' => '✕',
+                                'akar' => '▲',
+                                'implants' => '◉',
+                                default => ''
+                            };
+                        @endphp
+
+                        <span style="display: inline-block; width: 24px; height: 30px; border: 1px solid #999; margin-right: -1px;
+                            background-color: {{ $bgColor }};
+                            position: relative; text-align: center; line-height: 30px; font-size: 10px; vertical-align: top;">
+                            {{ $gigi }}
+                            @if($symbol)
+                                <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+                                    color: {{ $kondisi === 'sehat' ? 'transparent' : '#333' }};">
+                                    {{ $symbol }}
+                                </span>
+                            @endif
+                        </span>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+        <!-- Legenda -->
+        <div style="font-size: 10px; margin-top: 10px; border-top: 1px dashed #ccc; padding-top: 5px; text-align: center;">
+            <strong>LEGENDA:</strong> 
+            <span style="display: inline-block; margin: 0 5px;">
+                <span style="display: inline-block; width: 12px; height: 12px; background-color: #ffffff; border: 1px solid #999; vertical-align: middle;"></span> Sehat
+            </span>
+            <span style="display: inline-block; margin: 0 5px;">
+                <span style="display: inline-block; width: 12px; height: 12px; background-color: #ffcccc; border: 1px solid #999; vertical-align: middle;"></span> Karies
+            </span>
+            <span style="display: inline-block; margin: 0 5px;">
+                <span style="display: inline-block; width: 12px; height: 12px; background-color: #ccffcc; border: 1px solid #999; vertical-align: middle;"></span> Tambalan
+            </span>
+            <span style="display: inline-block; margin: 0 5px;">
+                <span style="display: inline-block; width: 12px; height: 12px; background-color: #dddddd; border: 1px solid #999; vertical-align: middle;"></span> Hilang
+            </span>
+            <span style="display: inline-block; margin: 0 5px;">
+                <span style="display: inline-block; width: 12px; height: 12px; background-color: #e6ccff; border: 1px solid #999; vertical-align: middle;"></span> Sisa Akar
+            </span>
+            <span style="display: inline-block; margin: 0 5px;">
+                <span style="display: inline-block; width: 12px; height: 12px; background-color: #ffd8b3; border: 1px solid #999; vertical-align: middle;"></span> Implants
+            </span>
+        </div>
     </div>
 
     <div class="signature-area">
